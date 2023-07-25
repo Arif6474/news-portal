@@ -2,6 +2,7 @@ import Head from "next/head";
 import RootLayout from "@/components/Layouts/RootLayout";
 import Banner from "@/components/UI/Banner";
 import AllNews from "@/components/UI/AllNews";
+import { revalidatePath } from "next/cache";
 
 
 const HomePage = ({allNews}) => {
@@ -35,6 +36,8 @@ export const getStaticProps = async()=>{
   return {
     props : {
       allNews: data
-    }
+    },
+    revalidate: 10,
   }
 }
+
