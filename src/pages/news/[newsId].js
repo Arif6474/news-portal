@@ -7,8 +7,13 @@ import {
     CommentOutlined,
     ProfileOutlined,
   } from "@ant-design/icons";
+import { useGetSingleNewsQuery } from "@/redux/api/apiSlice";
+import { useRouter } from "next/router";
 
-function NewsDetail({ news }) {
+function NewsDetail() {
+    const router = useRouter()
+    console.log("🚀 ~ file: [newsId].js:15 ~ NewsDetail ~ router:", router)
+    const {data:news}= useGetSingleNewsQuery(router.query.newsId)
     return (
     <Row style={{ marginTop: "80px", alignItems: "center" }}>
     <Col md={6} lg={12}>
@@ -84,14 +89,14 @@ NewsDetail.getLayout = function getLayout(page) {
 //   return { paths, fallback: false };
 // };
 
-export const getServerSideProps = async (context) => {
-  console.log("🚀 ~ file: [newsId].js:23 ~ getStaticProps ~ context:", context)
-  const {params} = context;
-  const res = await fetch(`http://localhost:5000/news/${params?.newsId}`);
-  const data = await res.json();
-  return {
-    props: {
-      news: data,
-    },
-  };
-};
+// export const getServerSideProps = async (context) => {
+//   console.log("🚀 ~ file: [newsId].js:23 ~ getStaticProps ~ context:", context)
+//   const {params} = context;
+//   const res = await fetch(`http://localhost:5000/news/${params?.newsId}`);
+//   const data = await res.json();
+//   return {
+//     props: {
+//       news: data,
+//     },
+//   };
+// };

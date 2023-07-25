@@ -2,11 +2,11 @@ import Head from "next/head";
 import RootLayout from "@/components/Layouts/RootLayout";
 import Banner from "@/components/UI/Banner";
 import AllNews from "@/components/UI/AllNews";
-import { revalidatePath } from "next/cache";
+import { useGetNewsQuery } from "@/redux/api/apiSlice";
 
 
 const HomePage = ({allNews}) => {
-  console.log("🚀 ~ file: index.js:7 ~ HomePage ~ allNews:", allNews)
+  const {data ,isError ,isLoading,error} = useGetNewsQuery()
   return (
     <>
       <Head>
@@ -19,7 +19,7 @@ const HomePage = ({allNews}) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Banner />
-      <AllNews allNews={allNews}/>
+      <AllNews allNews={data}/>
     </>
   );
 };
@@ -30,14 +30,14 @@ HomePage.getLayout = function getLayout(page) {
 };
 
 
-export const getServerSideProps = async()=>{
-  const res = await fetch("http://localhost:5000/news")
-  const data = await res.json()
-  return {
-    props : {
-      allNews: data
-    },
+// export const getServerSideProps = async()=>{
+//   const res = await fetch("http://localhost:5000/news")
+//   const data = await res.json()
+//   return {
+//     props : {
+//       allNews: data
+//     },
 
-  }
-}
+//   }
+// }
 
